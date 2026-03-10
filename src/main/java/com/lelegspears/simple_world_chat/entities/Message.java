@@ -1,9 +1,12 @@
 package com.lelegspears.simple_world_chat.entities;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
-public class Message {
+public class Message implements Serializable{
+	private static final long serialVersionUID = 1L;
+	
 	private int id;
 	private String content;
 	private LocalDate date;
