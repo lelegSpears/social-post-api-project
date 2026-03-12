@@ -1,30 +1,42 @@
 package com.lelegspears.simple_world_chat.entities;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
+import org.hibernate.annotations.CreationTimestamp;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name="message")
 public class Message implements Serializable{
 	private static final long serialVersionUID = 1L;
-	
-	private int id;
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private Long id;
 	private String content;
-	private LocalDate date;
+	@CreationTimestamp
+	private LocalDateTime date;
 	
 	public Message(){
 	}
 
-	public Message(int id, String content, LocalDate date) {
+	public Message(Long id, String content, LocalDateTime date) {
 		this.id = id;
 		this.content = content;
 		this.date = date;
 	}
 
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -36,11 +48,11 @@ public class Message implements Serializable{
 		this.content = content;
 	}
 
-	public LocalDate getDate() {
+	public LocalDateTime getDate() {
 		return date;
 	}
 
-	public void setDate(LocalDate date) {
+	public void setDate(LocalDateTime date) {
 		this.date = date;
 	}
 
@@ -63,6 +75,8 @@ public class Message implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		Message other = (Message) obj;
-		return id == other.id;
+		return Objects.equals(id, other.id);
 	}
+
+	
 }
