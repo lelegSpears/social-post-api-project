@@ -1,7 +1,8 @@
 package com.lelegspears.simple_world_chat.entities;
 
-import java.io.Serializable;
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -12,28 +13,27 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.OneToMany;
 
 @Entity
-@Table(name="message")
-public class Message implements Serializable{
-	private static final long serialVersionUID = 1L;
+public class Post {
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	private Long id;
 	private String content;
 	@CreationTimestamp
 	private Instant date;
 	
 	@JsonBackReference
-	@ManyToOne
-	private Post post;
-	
-	public Message(){
-	}
+	@OneToMany
+	private List<Message> messages = new ArrayList<>();
 
-	public Message(Long id, String content, Instant date) {
+	public Post() {
+	}
+	
+	
+	
+	public Post(Long id, String content, Instant date) {
 		this.id = id;
 		this.content = content;
 		this.date = date;
@@ -63,15 +63,21 @@ public class Message implements Serializable{
 		this.date = date;
 	}
 
-	@Override
-	public String toString() {
-		return "Message [id=" + id + ", content=" + content + ", date=" + date + "]";
+	public List<Message> getMessages() {
+		return messages;
 	}
+	public void addMessage(Message msg) {
+		this.messages.add(msg);
+	}
+
+
 
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
 	}
+
+
 
 	@Override
 	public boolean equals(Object obj) {
@@ -81,9 +87,12 @@ public class Message implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Message other = (Message) obj;
+		Post other = (Post) obj;
 		return Objects.equals(id, other.id);
 	}
 
-	
+	@Override
+	public String toString() {
+		return "Post [id=" + id + ", content=" + content + ", date=" + date + ", messages=" + messages + "]";
+	}
 }

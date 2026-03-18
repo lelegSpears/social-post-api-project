@@ -1,0 +1,15 @@
+spring.application.name=simple-world-chat
+server.port=8080
+
+spring.datasource.url=jdbc:mysql://localhost:3306/nome_banco
+spring.datasource.username=User_exemple
+spring.datasource.password=password_exemple
+
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+
+spring.jpa.hibernate.ddl-auto=update
+
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.format_sql=true
+
+spring.jpa.database-platform=org.hibernate.dialect.MySQLDialect

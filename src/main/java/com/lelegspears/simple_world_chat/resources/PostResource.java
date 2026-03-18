@@ -13,32 +13,31 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.lelegspears.simple_world_chat.entities.Message;
-import com.lelegspears.simple_world_chat.services.MessageService;
+import com.lelegspears.simple_world_chat.entities.Post;
+import com.lelegspears.simple_world_chat.services.PostService;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/messages")
-public class MessageResource {
+@RequestMapping("/posts")
+public class PostResource {
 	@Autowired
-	private MessageService service;
+	private PostService service;
 	
 	@GetMapping
-	public ResponseEntity<List<Message>> findAll(){
-		List<Message> messages = service.findAll();
+	public ResponseEntity<List<Post>> findAll(){
+		List<Post> messages = service.findAll();
 		return ResponseEntity.ok().body(messages);
 	}
 	
 	@PostMapping
-	public ResponseEntity<Message> insert(@RequestBody Message message) {
-		Message msg = service.insert(message);
+	public ResponseEntity<Post> insert(@RequestBody Post pst) {
+		Post post = service.insert(pst);
 		URI uri = ServletUriComponentsBuilder
 				.fromCurrentRequest()
 				.path("/{id}")
-				.buildAndExpand(msg.getId())
+				.buildAndExpand(post.getId())
 				.toUri();
-		return ResponseEntity.created(uri).body(msg);
+		return ResponseEntity.created(uri).body(post);
 		
 	}
-	
 }
