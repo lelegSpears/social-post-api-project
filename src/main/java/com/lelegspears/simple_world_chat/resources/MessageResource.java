@@ -50,7 +50,7 @@ public class MessageResource {
 		return ResponseEntity.noContent().build();
 	}
 	
-	@PutMapping
+	@PutMapping(value="/{id}")
 	public ResponseEntity<Message> update(@PathVariable Long id, @RequestBody Message obj){
 		obj = service.update(id, obj);
 		return ResponseEntity.ok().body(obj);
