@@ -7,8 +7,8 @@ import java.util.Objects;
 
 import org.hibernate.annotations.CreationTimestamp;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -27,8 +27,8 @@ public class Post {
 	@CreationTimestamp
 	private Instant date;
 	
-	@JsonBackReference
-	@OneToMany
+	@JsonManagedReference
+	@OneToMany(mappedBy="post")
 	private List<Message> messages = new ArrayList<>();
 
 	public Post() {

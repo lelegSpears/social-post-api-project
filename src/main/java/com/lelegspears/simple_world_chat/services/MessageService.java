@@ -28,7 +28,7 @@ public class MessageService {
 		try {
 			repository.deleteById(id);
 		} catch(EmptyResultDataAccessException e){
-			e.printStackTrace();;
+			throw new ResourceNotFoundException(id);
 		}
 	}
 	public Message update(Long id, Message obj) {
@@ -40,7 +40,6 @@ public class MessageService {
 
 	private void updateData(Message entity, Message obj) {
 		entity.setContent(obj.getContent());
-		entity.setDate(obj.getDate());
 		entity.setMessageStatus(obj.getMessageStatus());
 	}
 }

@@ -1,9 +1,9 @@
 package com.lelegspears.simple_world_chat.entities.enums;
 
 public enum MessageStatus {
-	Enviada(1),
-	Recebida(2),
-	Lida(3);
+	SENT(1),
+	RECEIVED(2),
+	READ(3);
 	
 	private int code;
 	
