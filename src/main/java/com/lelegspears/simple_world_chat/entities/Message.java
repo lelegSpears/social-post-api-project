@@ -101,6 +101,13 @@ public class Message implements Serializable{
 			this.messageStatus = messageStatus.getCode();
 		}
 	}
-
 	
+
+	public Post getPost() {
+		return post;
+	}
+
+	public void setPost(Post post) {
+		this.post = post;
+	}
 }
