@@ -7,6 +7,7 @@ import java.util.Objects;
 import org.hibernate.annotations.CreationTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.lelegspears.simple_world_chat.entities.enums.MessageStatus;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -30,12 +31,15 @@ public class Message implements Serializable{
 	@ManyToOne
 	private Post post;
 	
+	private Integer messageStatus;
+	
 	public Message(){
 	}
 
-	public Message(Long id, String content, Instant date) {
+	public Message(Long id, String content, MessageStatus messageStatus, Instant date) {
 		this.id = id;
 		this.content = content;
+		setMessageStatus(messageStatus);
 		this.date = date;
 	}
 
@@ -83,6 +87,19 @@ public class Message implements Serializable{
 			return false;
 		Message other = (Message) obj;
 		return Objects.equals(id, other.id);
+	}
+
+	public MessageStatus getMessageStatus() {
+		if (messageStatus == null) {
+	        return null;
+	    }
+		return MessageStatus.valueOf(messageStatus);
+	}
+
+	public void setMessageStatus(MessageStatus messageStatus) {
+		if(messageStatus != null) {
+			this.messageStatus = messageStatus.getCode();
+		}
 	}
 
 	
