@@ -1,23 +1,25 @@
-package com.lelegspears.simple_world_chat.entities;
+package com.lelegspears.simple_world_chat.entities.post;
 
+import java.io.Serializable;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-
 import org.hibernate.annotations.CreationTimestamp;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OrderBy;
 
 @Entity
-public class Post {
+public class Post implements Serializable{
+
+	private static final long serialVersionUID = 1L;
+	
 	@Id
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	private Long id;
@@ -29,7 +31,8 @@ public class Post {
 	
 	@JsonManagedReference
 	@OneToMany(mappedBy="post")
-	private List<Message> messages = new ArrayList<>();
+	@OrderBy("date ASC")
+	private List<PostComment> messages = new ArrayList<>();
 
 	public Post() {
 	}
@@ -66,21 +69,18 @@ public class Post {
 		this.date = date;
 	}
 
-	public List<Message> getMessages() {
+	public List<PostComment> getMessages() {
 		return messages;
 	}
-	public void addMessage(Message msg) {
+	public void addMessage(PostComment msg) {
+		msg.setPost(this);
 		this.messages.add(msg);
 	}
-
-
 
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
 	}
-
-
 
 	@Override
 	public boolean equals(Object obj) {

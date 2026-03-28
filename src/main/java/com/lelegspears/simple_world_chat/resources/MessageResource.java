@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.lelegspears.simple_world_chat.entities.Message;
+import com.lelegspears.simple_world_chat.entities.message.Message;
 import com.lelegspears.simple_world_chat.services.MessageService;
 
 @CrossOrigin(origins = "*")

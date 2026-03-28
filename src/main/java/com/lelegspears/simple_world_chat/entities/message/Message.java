@@ -1,24 +1,26 @@
-package com.lelegspears.simple_world_chat.entities;
+package com.lelegspears.simple_world_chat.entities.message;
 
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.Objects;
-
 import org.hibernate.annotations.CreationTimestamp;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.lelegspears.simple_world_chat.entities.enums.MessageStatus;
+import com.lelegspears.simple_world_chat.entities.user.User;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 @Table(name="message")
-public class Message implements Serializable{
+public abstract class Message implements Serializable{
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -27,9 +29,9 @@ public class Message implements Serializable{
 	@CreationTimestamp
 	private Instant date;
 	
-	@JsonBackReference
 	@ManyToOne
-	private Post post;
+	@JoinColumn(name = "sender_id")
+	private User sender;
 	
 	private Integer messageStatus;
 	
@@ -102,12 +104,4 @@ public class Message implements Serializable{
 		}
 	}
 	
-
-	public Post getPost() {
-		return post;
-	}
-
-	public void setPost(Post post) {
-		this.post = post;
-	}
 }
