@@ -47,8 +47,6 @@ public class Chat implements Serializable{
 		this.user1 = user1;
 		this.user2 = user2;
 	}
-	
-	
 
 	public Long getId() {
 		return id;

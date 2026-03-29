@@ -32,12 +32,10 @@ public class Post implements Serializable{
 	@JsonManagedReference
 	@OneToMany(mappedBy="post")
 	@OrderBy("date ASC")
-	private List<PostComment> messages = new ArrayList<>();
+	private List<PostComment> comments = new ArrayList<>();
 
 	public Post() {
 	}
-	
-	
 	
 	public Post(Long id, String content, Instant date) {
 		this.id = id;
@@ -70,11 +68,11 @@ public class Post implements Serializable{
 	}
 
 	public List<PostComment> getMessages() {
-		return messages;
+		return comments;
 	}
 	public void addMessage(PostComment msg) {
 		msg.setPost(this);
-		this.messages.add(msg);
+		this.comments.add(msg);
 	}
 
 	@Override
@@ -96,6 +94,6 @@ public class Post implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Post [id=" + id + ", content=" + content + ", date=" + date + ", messages=" + messages + "]";
+		return "Post [id=" + id + ", content=" + content + ", date=" + date + ", messages=" + comments + "]";
 	}
 }

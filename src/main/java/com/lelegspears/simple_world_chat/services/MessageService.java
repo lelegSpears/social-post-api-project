@@ -2,18 +2,21 @@ package com.lelegspears.simple_world_chat.services;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
-
 import com.lelegspears.simple_world_chat.entities.message.Message;
 import com.lelegspears.simple_world_chat.repositories.MessageRepository;
 import com.lelegspears.simple_world_chat.services.exceptions.ResourceNotFoundException;
 
 @Service
 public class MessageService {
-	@Autowired
-	private MessageRepository repository;
+
+	private final MessageRepository repository;
+	
+	public MessageService(MessageRepository repository) {
+	    this.repository = repository;
+	}
 	
 	public List<Message> findAll(){
 		List<Message> messages = repository.findAll();
