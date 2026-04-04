@@ -23,19 +23,19 @@ import com.lelegspears.simple_world_chat.services.PostService;
 public class PostResource {
 	@Autowired
 	private PostService service;
-	
+
 	@GetMapping
 	public ResponseEntity<List<Post>> findAll(){
 		List<Post> messages = service.findAll();
 		return ResponseEntity.ok().body(messages);
 	}
-	
+
 	@GetMapping(value="/{id}")
 	public ResponseEntity<Post> findById(@PathVariable Long id) {
 		Post post = service.findById(id);
 		return ResponseEntity.ok().body(post);
 	}
-	
+
 	@PostMapping
 	public ResponseEntity<Post> insert(@RequestBody Post pst) {
 		Post post = service.insert(pst);
@@ -46,6 +46,4 @@ public class PostResource {
 				.toUri();
 		return ResponseEntity.created(uri).body(post);
 	}
-	
-	
 }

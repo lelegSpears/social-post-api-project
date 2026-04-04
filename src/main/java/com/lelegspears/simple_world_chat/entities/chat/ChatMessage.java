@@ -6,10 +6,13 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
+import java.io.Serial;
+
 @Entity
 public class ChatMessage extends Message{
 
-	private static final long serialVersionUID = 1L;
+	@Serial
+    private static final long serialVersionUID = 1L;
 	
 	@JsonBackReference
 	@ManyToOne

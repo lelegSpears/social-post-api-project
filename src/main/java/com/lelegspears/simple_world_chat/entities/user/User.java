@@ -1,44 +1,62 @@
 package com.lelegspears.simple_world_chat.entities.user;
 
+import java.io.Serial;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.lelegspears.simple_world_chat.entities.message.Message;
+import com.lelegspears.simple_world_chat.entities.post.Post;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 public class User implements Serializable{
 	
-	private static final long serialVersionUID = 1L;
+	@Serial
+    private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
+	@NotBlank
+	@Column(nullable = false)
 	private String name;
-	
-	private String user;
+
+	@Column(unique = true, nullable = false)
+	@NotBlank
+	private String username;
+
+	@NotBlank
+	@JsonIgnore
+	@Column(nullable = false)
 	private String password;
+
+	@JsonIgnore
+	@OneToMany(mappedBy = "sender", fetch = FetchType.LAZY)
+	private List<Message> messages = new ArrayList<>();
+
+	@JsonIgnore
+	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+	private List<Post> posts = new ArrayList<>();
+
 	
 	public User() {
 	}
 
-	public User(Long id, String name, String user, String password) {
+	public User(Long id, String name, String username, String password) {
 		this.id = id;
 		this.name = name;
-		this.user = user;
+		this.username = username;
 		this.password = password;
 	
 	}
 
 	public Long getId() {
 		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
 	}
 
 	public String getName() {
@@ -49,12 +67,12 @@ public class User implements Serializable{
 		this.name = name;
 	}
 
-	public String getUser() {
-		return user;
+	public String getUsername() {
+		return username;
 	}
 
-	public void setUser(String user) {
-		this.user = user;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	public String getPassword() {

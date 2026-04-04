@@ -6,4 +6,5 @@ import com.lelegspears.simple_world_chat.entities.user.User;
 
 public interface UserRepository extends JpaRepository<User,Long>{
 
+    boolean existsByUsername(String username);
 }

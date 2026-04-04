@@ -1,10 +1,11 @@
 package com.lelegspears.simple_world_chat.entities.chat;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.lelegspears.simple_world_chat.entities.user.User;
 
@@ -20,17 +21,18 @@ import jakarta.persistence.OrderBy;
 @Entity
 public class Chat implements Serializable{
 
-	private static final long serialVersionUID = 1L;
+	@Serial
+    private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	
-	@JsonBackReference
+	@JsonIgnore
 	@ManyToOne
 	private User user1;
 
-	@JsonBackReference
+	@JsonIgnore
 	@ManyToOne
 	private User user2;
 	

@@ -1,5 +1,6 @@
 package com.lelegspears.simple_world_chat.entities.message;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.Objects;
@@ -8,6 +9,8 @@ import com.lelegspears.simple_world_chat.entities.enums.MessageStatus;
 import com.lelegspears.simple_world_chat.entities.user.User;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -21,28 +24,29 @@ import jakarta.persistence.Table;
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name="message")
 public abstract class Message implements Serializable{
-	private static final long serialVersionUID = 1L;
+	@Serial
+    private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	private String content;
 	@CreationTimestamp
 	private Instant date;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "sender_id")
 	private User sender;
-	
-	private Integer messageStatus;
-	
+
+	@Enumerated(EnumType.STRING)
+	private MessageStatus messageStatus;
+
 	public Message(){
 	}
 
-	public Message(Long id, String content, MessageStatus messageStatus, Instant date) {
+	public Message(Long id, String content, MessageStatus messageStatus) {
 		this.id = id;
 		this.content = content;
 		setMessageStatus(messageStatus);
-		this.date = date;
 	}
 
 	public Long getId() {
@@ -63,10 +67,6 @@ public abstract class Message implements Serializable{
 
 	public Instant getDate() {
 		return date;
-	}
-
-	public void setDate(Instant date) {
-		this.date = date;
 	}
 
 	@Override
@@ -92,16 +92,18 @@ public abstract class Message implements Serializable{
 	}
 
 	public MessageStatus getMessageStatus() {
-		if (messageStatus == null) {
-	        return null;
-	    }
-		return MessageStatus.valueOf(messageStatus);
+	    return messageStatus;
 	}
 
 	public void setMessageStatus(MessageStatus messageStatus) {
-		if(messageStatus != null) {
-			this.messageStatus = messageStatus.getCode();
-		}
+	    this.messageStatus = messageStatus;
 	}
-	
+
+	public User getSender() {
+		return sender;
+	}
+
+	public void setSender(User sender) {
+		this.sender = sender;
+	}
 }

@@ -17,16 +17,17 @@ public class PostService {
 	}
 	
 	public List<Post> findAll(){
-		List<Post> posts = repository.findAll();
-		return posts; 
+        return repository.findAll();
 	}
 	
 	public Post findById(Long id) {
-		Post post = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException(id));
-		return post;
+        return repository.findById(id).orElseThrow(() -> new ResourceNotFoundException(id));
 	}
 	
 	public Post insert(Post post) {
+		if (post.getUser() == null) {
+			throw new IllegalArgumentException("Post precisa de um usuário");
+		}
 		return repository.save(post);
 	}
 	
